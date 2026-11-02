@@ -1,0 +1,8 @@
+{
+  "patientId": "P-001",
+  "nama": "Budi Santoso",
+  "gender": "male",
+  "diagnosisText": "Pneumonia",
+  "snomedCode": "233604007"
+}
+

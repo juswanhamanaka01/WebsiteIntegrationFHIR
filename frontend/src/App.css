@@ -1,0 +1,1426 @@
+/* ==========================================================================
+   SIMRS RSUD ISTEK 'Aisyiyah Kendari — E-Health (HL7 FHIR R4)
+   Desain Lembar Kerja Rekam Medis Elektronik & Penunjang Radiologi
+   ========================================================================== */
+
+:root {
+  --rs-green-dark: #0f3d24;
+  --rs-green-main: #14532d;
+  --rs-green-mid: #166534;
+  --rs-green-accent: #15803d;
+  --rs-green-soft: #f0fdf4;
+  --rs-green-border: #bbf7d0;
+
+  --bg-page: #edf1f5;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-header-cell: #f1f5f9;
+
+  --border-strong: #94a3b8;
+  --border-main: #cbd5e1;
+  --border-light: #e2e8f0;
+
+  --text-primary: #0f172a;
+  --text-body: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --danger-main: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+
+  --font-sans: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Consolas', 'SFMono-Regular', Menlo, Monaco, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 13.5px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.simrs-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   1. Bar Utilitas Atas (Kop Sistem)
+   -------------------------------------------------------------------------- */
+.simrs-utility-bar {
+  background-color: var(--rs-green-dark);
+  color: #d1fae5;
+  font-size: 11px;
+  padding: 5px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid #062816;
+  letter-spacing: 0.02em;
+}
+
+.utility-left,
+.utility-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.utility-inst {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.utility-sep {
+  color: #6ee7b7;
+  opacity: 0.5;
+}
+
+.utility-meta {
+  color: #a7f3d0;
+}
+
+.utility-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.utility-link:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   2. Header Utama Rumah Sakit
+   -------------------------------------------------------------------------- */
+.simrs-header {
+  background-color: var(--bg-surface);
+  border-bottom: 2px solid var(--rs-green-main);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rs-emblem {
+  width: 44px;
+  height: 44px;
+  background-color: var(--rs-green-main);
+  border: 2px solid var(--rs-green-dark);
+  border-radius: 4px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emblem-cross {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 0.9;
+}
+
+.emblem-sub {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-title-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header-title-line h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--rs-green-dark);
+  letter-spacing: -0.01em;
+}
+
+.unit-tag {
+  background-color: var(--rs-green-soft);
+  color: var(--rs-green-main);
+  border: 1px solid var(--rs-green-border);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.03em;
+}
+
+.header-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.server-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-main);
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.server-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.server-indicator.is-online {
+  background-color: #16a34a;
+}
+
+.server-indicator.is-offline {
+  background-color: #dc2626;
+}
+
+/* Tombol Standar SIMRS */
+.btn-simrs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+.btn-simrs-primary {
+  background-color: var(--rs-green-main);
+  color: #ffffff;
+  border-color: var(--rs-green-dark);
+}
+
+.btn-simrs-primary:hover {
+  background-color: var(--rs-green-dark);
+}
+
+.btn-simrs-outline {
+  background-color: #ffffff;
+  color: var(--text-body);
+  border-color: var(--border-strong);
+}
+
+.btn-simrs-outline:hover {
+  background-color: var(--bg-header-cell);
+}
+
+.btn-simrs:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   3. Sub-Bar Daftar Berkas Pasien (Antrean)
+   -------------------------------------------------------------------------- */
+.simrs-queue-strip {
+  background-color: #e2e8f0;
+  border-bottom: 1px solid var(--border-main);
+  padding: 6px 24px;
+}
+
+.queue-strip-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.queue-strip-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.queue-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.queue-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-main);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-body);
+  cursor: pointer;
+}
+
+.queue-tab:hover {
+  border-color: var(--rs-green-main);
+}
+
+.queue-tab.active {
+  background-color: var(--rs-green-main);
+  border-color: var(--rs-green-dark);
+  color: #ffffff;
+}
+
+.q-code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+.queue-tab.active .q-code {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.q-name {
+  font-weight: 600;
+}
+
+.q-modality {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.queue-tab.active .q-modality {
+  color: #bbf7d0;
+}
+
+/* --------------------------------------------------------------------------
+   4. Area Lembar Kerja Utama & Header Ringkasan Pasien
+   -------------------------------------------------------------------------- */
+.simrs-workspace {
+  flex: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 24px 28px;
+}
+
+.patient-summary-sheet {
+  display: grid;
+  grid-template-columns: 130px 1.3fr 140px 1.5fr 1.2fr 165px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--rs-green-main);
+  border-radius: 3px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 1100px) {
+  .patient-summary-sheet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .patient-summary-sheet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sheet-cell {
+  padding: 8px 12px;
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.sheet-cell:last-child {
+  border-right: none;
+}
+
+.sheet-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sheet-value-mono {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--rs-green-main);
+}
+
+.sheet-value-strong {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sheet-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.sheet-value-clinical {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rs-green-mid);
+}
+
+.sheet-value-clinical small {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.sheet-status-ok {
+  display: inline-block;
+  align-self: flex-start;
+  background-color: var(--rs-green-soft);
+  color: var(--rs-green-main);
+  border: 1px solid var(--rs-green-border);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Grid 3 Panel Modul Rekam Medis
+   -------------------------------------------------------------------------- */
+.simrs-panels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 1120px) {
+  .simrs-panels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.simrs-module-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.module-header {
+  background-color: var(--bg-header-cell);
+  border-bottom: 1px solid var(--border-main);
+  padding: 9px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.module-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-code-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background-color: var(--rs-green-main);
+  color: #ffffff;
+  padding: 3px 7px;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.module-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.module-subtitle {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.module-subtitle code {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.doc-status-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid var(--border-main);
+  background-color: #ffffff;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.doc-status-badge.status-verified {
+  background-color: var(--rs-green-soft);
+  color: var(--rs-green-main);
+  border-color: var(--rs-green-border);
+}
+
+.doc-status-badge.status-modality {
+  background-color: #f8fafc;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.module-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.module-body-empty {
+  padding: 28px 14px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Elemen Modul RM-01 (Identitas Pasien)
+   -------------------------------------------------------------------------- */
+.rm-identity-box {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  border: 1px solid var(--border-main);
+  background-color: var(--bg-subtle);
+  border-radius: 2px;
+}
+
+.rm-number-block {
+  padding: 8px 10px;
+  border-right: 1px solid var(--border-main);
+  background-color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rm-number-caption,
+.rm-name-caption {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.rm-number-value {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--rs-green-main);
+}
+
+.rm-name-block {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rm-name-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Elemen Modul RM-02 (Diagnosa & SNOMED CT)
+   -------------------------------------------------------------------------- */
+.rm-diagnosis-sheet {
+  border: 1px solid var(--border-main);
+  border-left: 3px solid var(--rs-green-main);
+  background-color: var(--bg-subtle);
+  padding: 10px 12px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diag-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.snomed-ref-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--rs-green-main);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.snomed-ref-link:hover {
+  text-decoration: underline;
+}
+
+.diag-sheet-main {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.diag-sheet-code-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border-main);
+}
+
+.code-box-label {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.code-box-value {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  background-color: #ffffff;
+  border: 1px solid var(--border-strong);
+  color: var(--rs-green-dark);
+  padding: 1px 7px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Tabel Data Spesifikasi SIMRS (Seragam di RM-01, RM-02, RM-03)
+   -------------------------------------------------------------------------- */
+.simrs-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border-light);
+  font-size: 12.5px;
+}
+
+.simrs-data-table tr:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+.simrs-data-table th,
+.simrs-data-table td {
+  padding: 6px 9px;
+  border-bottom: 1px solid var(--border-light);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.simrs-data-table th {
+  width: 42%;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border-light);
+  background-color: #f8fafc;
+}
+
+.simrs-data-table th code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-primary);
+}
+
+.simrs-data-table td {
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.simrs-data-table td.mono-cell {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.clinical-inline-tag {
+  display: inline-block;
+  background-color: #f1f5f9;
+  border: 1px solid var(--border-main);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-size: 11.5px;
+}
+
+.source-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: #f1f5f9;
+  border: 1px solid var(--border-main);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Elemen Modul RM-03 (Penampil Citra PACS Radiologi)
+   -------------------------------------------------------------------------- */
+.pacs-frame {
+  border: 1px solid #1e293b;
+  background-color: #000000;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.pacs-control-bar {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  padding: 5px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid #334155;
+}
+
+.pacs-caption {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.pacs-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.pacs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #0f172a;
+  color: #cbd5e1;
+  border: 1px solid #475569;
+  padding: 2px 7px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.pacs-btn:hover {
+  background-color: #334155;
+  color: #ffffff;
+}
+
+.pacs-btn.is-active {
+  background-color: var(--rs-green-main);
+  border-color: #4ade80;
+  color: #ffffff;
+}
+
+.pacs-viewport {
+  position: relative;
+  width: 100%;
+  height: 215px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #05080f;
+  overflow: hidden;
+}
+
+.pacs-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.pacs-hud {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.25;
+  color: #cbd5e1;
+  background-color: rgba(0, 0, 0, 0.65);
+  padding: 2px 5px;
+  pointer-events: none;
+}
+
+.hud-tl {
+  top: 6px;
+  left: 6px;
+  color: #86efac;
+}
+
+.hud-tr {
+  top: 6px;
+  right: 6px;
+  text-align: right;
+}
+
+.hud-bl {
+  bottom: 6px;
+  left: 6px;
+}
+
+.hud-br {
+  bottom: 6px;
+  right: 6px;
+  color: #fde047;
+}
+
+.pacs-fallback-box {
+  min-height: 215px;
+  padding: 24px 16px;
+  background-color: #090d16;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.pacs-fallback-box span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #86efac;
+}
+
+.pacs-fallback-box p {
+  color: #94a3b8;
+  max-width: 280px;
+  font-size: 11.5px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Panel Log Payload FHIR R4 (Raw JSON)
+   -------------------------------------------------------------------------- */
+.module-header-clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.module-header-clickable:hover {
+  background-color: #e2e8f0;
+}
+
+.module-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-log-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-strong);
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-body);
+  cursor: pointer;
+}
+
+.fhir-log-body {
+  padding: 12px 14px;
+  background-color: #111827;
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fhir-mapping-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  padding: 7px 12px;
+  border-radius: 2px;
+  font-size: 11.5px;
+  color: #d1d5db;
+}
+
+.fhir-mapping-summary code {
+  font-family: var(--font-mono);
+  color: #86efac;
+}
+
+.fhir-log-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fhir-tab-group,
+.fhir-actions-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.fhir-tab {
+  background-color: #1f2937;
+  color: #cbd5e1;
+  border: 1px solid #374151;
+  padding: 5px 11px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.fhir-tab:hover {
+  background-color: #374151;
+  color: #ffffff;
+}
+
+.fhir-tab.active {
+  background-color: var(--rs-green-main);
+  border-color: #22c55e;
+  color: #ffffff;
+}
+
+.fhir-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #4b5563;
+  padding: 5px 10px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.fhir-action-btn:hover {
+  background-color: #374151;
+}
+
+.fhir-code-container {
+  background-color: #090d16;
+  border: 1px solid #374151;
+  border-radius: 2px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 12px;
+}
+
+.fhir-pre {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #a7f3d0;
+}
+
+/* --------------------------------------------------------------------------
+   7. Modal Formulir Entri & Lightbox PACS
+   -------------------------------------------------------------------------- */
+.simrs-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 16px;
+}
+
+.simrs-modal-dialog {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-top: 3px solid var(--rs-green-main);
+  border-radius: 3px;
+  max-width: 860px;
+  width: 100%;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.simrs-modal-header {
+  background-color: var(--bg-header-cell);
+  border-bottom: 1px solid var(--border-main);
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-inst-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--rs-green-main);
+  letter-spacing: 0.04em;
+  display: block;
+}
+
+.simrs-modal-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.modal-close-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.simrs-modal-toolbar {
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-main);
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolbar-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.toolbar-caption {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.mode-toggle-group {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mode-toggle-btn {
+  background-color: #ffffff;
+  color: var(--text-secondary);
+  border: none;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-toggle-btn.active {
+  background-color: var(--rs-green-main);
+  color: #ffffff;
+}
+
+.preset-buttons-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.preset-item-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-main);
+  padding: 4px 9px;
+  border-radius: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-body);
+  cursor: pointer;
+}
+
+.preset-item-btn:hover {
+  border-color: var(--rs-green-main);
+}
+
+.preset-item-btn.active {
+  background-color: var(--rs-green-soft);
+  border-color: var(--rs-green-main);
+  color: var(--rs-green-dark);
+}
+
+.preset-item-btn code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.simrs-modal-form {
+  padding: 14px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simrs-form-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .simrs-form-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.simrs-fieldset {
+  border: 1px solid var(--border-main);
+  padding: 12px 14px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simrs-fieldset legend {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rs-green-dark);
+  padding: 0 6px;
+}
+
+.simrs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.simrs-field-Split {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 8px;
+}
+
+.simrs-field label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.simrs-field label code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.simrs-field input,
+.simrs-field select {
+  padding: 6px 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: var(--text-primary);
+  background-color: #ffffff;
+  outline: none;
+}
+
+.simrs-field input:focus,
+.simrs-field select:focus {
+  border-color: var(--rs-green-main);
+  box-shadow: 0 0 0 2px rgba(20, 83, 45, 0.15);
+}
+
+.simrs-mapping-box {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-main);
+  border-left: 3px solid var(--rs-green-main);
+  padding: 8px 10px;
+  font-size: 11.5px;
+  color: var(--text-body);
+}
+
+.simrs-mapping-box ul {
+  margin-top: 4px;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.simrs-mapping-box code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--rs-green-dark);
+}
+
+.simrs-json-editor-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.simrs-json-textarea {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background-color: #0f172a;
+  color: #a7f3d0;
+  border: 1px solid #334155;
+  border-radius: 2px;
+  padding: 10px;
+  line-height: 1.45;
+}
+
+.simrs-json-error {
+  background-color: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  color: var(--danger-main);
+  padding: 7px 10px;
+  font-size: 12px;
+}
+
+.simrs-modal-footer {
+  border-top: 1px solid var(--border-main);
+  padding: 10px 0 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Lightbox Dialog */
+.pacs-lightbox-dialog {
+  background-color: #090d16;
+  border: 1px solid #475569;
+  border-radius: 3px;
+  max-width: 780px;
+  width: 100%;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.lightbox-header {
+  background-color: #1e293b;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #334155;
+}
+
+.lightbox-sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-top: 2px;
+}
+
+.lightbox-body {
+  background-color: #000000;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   8. State Loading, Error & Footer
+   -------------------------------------------------------------------------- */
+.simrs-state-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: 3px;
+  padding: 36px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.simrs-state-error {
+  border-top: 3px solid var(--danger-main);
+}
+
+.error-icon {
+  color: var(--danger-main);
+}
+
+.error-guide {
+  background-color: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  color: #7f1d1d;
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 12px;
+  border-radius: 2px;
+  max-width: 620px;
+}
+
+.error-guide ol {
+  margin-top: 4px;
+  padding-left: 18px;
+}
+
+.error-guide code {
+  font-family: var(--font-mono);
+  background-color: #fee2e2;
+  padding: 1px 4px;
+}
+
+.simrs-loader {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #cbd5e1;
+  border-top-color: var(--rs-green-main);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+.simrs-footer {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-main);
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.footer-right {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}

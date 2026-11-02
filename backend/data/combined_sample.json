@@ -1,0 +1,10 @@
+{
+  "patientId": "P-001",
+  "nama": "Budi Santoso",
+  "gender": "male",
+  "diagnosisText": "Pneumonia (Bacterial Infiltrate)",
+  "snomedCode": "233604007",
+  "modality": "DX",
+  "studyDate": "2026-10-24",
+  "imageFileName": "person1946_bacteria_4874.jpeg"
+}

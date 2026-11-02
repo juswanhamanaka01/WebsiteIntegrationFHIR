@@ -1,0 +1,27 @@
+# Python & Backend Virtual Environment
+__pycache__/
+*.py[cod]
+*$py.class
+backend/.venv/
+backend/venv/
+.venv/
+venv/
+.env
+
+# Dataset Mentah Berukuran Besar (Sampel terpilih sudah disalin ke backend/static & frontend/public)
+backend/archive/
+
+# Node & Frontend Build
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
