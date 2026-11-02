@@ -1,0 +1,11 @@
+services:
+  simrs-fhir:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simrs-fhir-ehealth
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8085}:8000"
+    environment:
+      - TZ=Asia/Makassar

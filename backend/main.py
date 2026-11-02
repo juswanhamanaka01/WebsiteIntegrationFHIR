@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any, List
@@ -43,6 +44,12 @@ app.add_middleware(
 BASE_DIR = os.path.dirname(__file__)
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 ARCHIVE_DIR = os.path.join(BASE_DIR, "archive")
+FRONTEND_DIST_DIR = os.environ.get(
+    "FRONTEND_DIST_DIR",
+    os.path.abspath(os.path.join(BASE_DIR, "..", "frontend_dist"))
+)
+if not os.path.isdir(FRONTEND_DIST_DIR):
+    FRONTEND_DIST_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", "frontend", "dist"))
 
 os.makedirs(STATIC_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -425,7 +432,7 @@ seed_initial_store()
 # API Endpoints
 # ---------------------------------------------------------------------------
 
-@app.get("/", summary="Health Check")
+@app.get("/api/health", summary="Health Check")
 def health_check():
     return {
         "status": "ok",
@@ -434,6 +441,14 @@ def health_check():
         "fhirVersion": FHIR_RELEASE_VERSION,
         "activePatients": len(PATIENT_STORE)
     }
+
+
+@app.get("/", summary="Root / Dashboard UI")
+def root_entry():
+    index_path = os.path.join(FRONTEND_DIST_DIR, "index.html")
+    if os.path.isfile(index_path):
+        return FileResponse(index_path)
+    return health_check()
 
 
 @app.get("/api/fhir/archive-samples", summary="Katalog Citra Rontgen dari Direktori backend/archive/chest_xray")
@@ -558,3 +573,23 @@ def get_sample_combined():
         "patient": record["patient"],
         "diagnosticReport": record["diagnosticReport"]
     }
+
+
+# ---------------------------------------------------------------------------
+# Mount Frontend Build (Production / Docker Mode)
+# ---------------------------------------------------------------------------
+if os.path.isdir(FRONTEND_DIST_DIR):
+    assets_dir = os.path.join(FRONTEND_DIST_DIR, "assets")
+    if os.path.isdir(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="frontend-assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_frontend_spa(full_path: str):
+        candidate = os.path.join(FRONTEND_DIST_DIR, full_path)
+        if full_path and os.path.isfile(candidate):
+            return FileResponse(candidate)
+        index_file = os.path.join(FRONTEND_DIST_DIR, "index.html")
+        if os.path.isfile(index_file):
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Not Found")
+

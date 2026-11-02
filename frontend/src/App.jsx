@@ -223,7 +223,7 @@ export default function App() {
             </span>
           )}
           <a
-            href="http://localhost:8000/docs"
+            href="/docs"
             target="_blank"
             rel="noreferrer"
             className="utility-link"
