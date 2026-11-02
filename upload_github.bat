@@ -13,16 +13,9 @@ echo ======================================================================
 echo    UNGGAH PROYEK KE GITHUB - SIMRS RSUD ISTEK 'AISYIYAH KENDARI
 echo ======================================================================
 echo.
-echo Langkah 1: Buat repository baru (kosong, tanpa README) di:
-echo            https://github.com/new
-echo.
-set /p REPO_URL="Langkah 2: Tempel URL Repository GitHub Anda (contoh: https://github.com/user/repo.git): "
-
-if "%REPO_URL%"=="" (
-    echo [ERROR] URL Repository tidak boleh kosong.
-    pause
-    exit /b 1
-)
+set "REPO_URL=https://github.com/juswanhamanaka01/WebsiteIntegrationFHIR.git"
+set /p INPUT_URL="URL Repository GitHub [Tekan Enter untuk gunakan default %REPO_URL%]: "
+if not "%INPUT_URL%"=="" set "REPO_URL=%INPUT_URL%"
 
 echo.
 echo [INFO] Menambahkan perubahan terbaru ke Git...
@@ -42,3 +35,4 @@ echo ======================================================================
 echo  Proses selesai! Silakan periksa halaman repository GitHub Anda.
 echo ======================================================================
 pause
+
