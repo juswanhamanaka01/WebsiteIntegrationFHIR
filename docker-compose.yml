@@ -9,3 +9,4 @@ services:
       - "${APP_PORT:-8085}:8000"
     environment:
       - TZ=Asia/Makassar
+
