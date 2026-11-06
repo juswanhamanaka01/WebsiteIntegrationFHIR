@@ -30,7 +30,7 @@ COPY backend/data/ ./data/
 # Salin hasil build frontend ke /app/frontend_dist agar dilayani langsung oleh FastAPI
 COPY --from=frontend-builder /app/frontend/dist /app/frontend_dist
 
-EXPOSE 8000
+EXPOSE 4000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "4000"]
 

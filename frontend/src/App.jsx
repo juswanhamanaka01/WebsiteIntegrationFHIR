@@ -252,9 +252,9 @@ export default function App() {
         </div>
 
         <div className="header-controls">
-          <div className="server-badge" title="Status Koneksi Backend FastAPI Port 8000">
+          <div className="server-badge" title="Status Koneksi Server FHIR">
             <span className={`server-indicator ${error ? 'is-offline' : 'is-online'}`} />
-            <span>Server FHIR: {error ? 'TERPUTUS' : 'AKTIF (PORT 8000)'}</span>
+            <span>Server FHIR: {error ? 'TERPUTUS' : 'AKTIF'}</span>
           </div>
 
           <button

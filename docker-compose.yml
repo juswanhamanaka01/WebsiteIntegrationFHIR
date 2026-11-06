@@ -6,7 +6,7 @@ services:
     container_name: simrs-fhir-ehealth
     restart: unless-stopped
     ports:
-      - "${APP_PORT:-8085}:8000"
+      - "${APP_PORT:-4000}:4000"
     environment:
       - TZ=Asia/Makassar
 
